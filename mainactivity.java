@@ -129,3 +129,5 @@ public class MainActivity extends AppCompatActivity {
         hideProgressBar();
     }
 }
+//获取log
+//for /f "delims=" %i in ('powershell -command "(Get-Date).ToString('yyyyMMddHHmmss')"') do (adb logcat -b all > ".\%i.log")
