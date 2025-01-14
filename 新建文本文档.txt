@@ -1,0 +1,78 @@
+public class WebViewActivity extends AppCompatActivity {
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_web);
+
+      File htmlFile = new File(getExternalFilesDir(null), "Download/local_page.html");
+
+      // 使用 FileProvider 获取 content:// URI
+      Uri uri = FileProvider.getUriForFile(this, "com.example.voicedemo", htmlFile);
+
+      // 创建 Intent 打开 HTML 文件
+      Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+      intent.setDataAndType(uri, "text/html");
+      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // 授权读取 URI
+      startActivity(intent);
+   }
+}
+
+
+ <activity
+            android:name=".WebViewActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="verify-email"
+                    android:scheme="http" />
+
+
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ResultActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="opennewactivity"
+                    android:scheme="myapp" />
+
+
+            </intent-filter>
+
+        </activity>
+		
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path
+        name="external_files"
+        path="Download/" />
+</paths>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Local HTML Page</title>
+</head>
+<body>
+    <button onclick="openNewActivity()">点击打开新的Activity</button>
+    <script type="text/javascript">
+        function openNewActivity() {
+            Android.openNewActivity();
+             window.location.href = "myapp://opennewactivity";
+        }
+    </script>
+</body>
+</html>
